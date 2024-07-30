@@ -546,7 +546,7 @@ static void cesar_do_adjustment(struct sock *sk,  const struct rate_sample *rs, 
 	} 
 
 	if(
-	(cesar->previous_rtt < cesar->previous_previous_rtt)
+	(cesar->previous_rtt <= cesar->previous_previous_rtt)
 	)
 	{
 		u32 current_cwnd = cesar->cwnd_est;
@@ -602,7 +602,7 @@ static void cesar_do_adjustment(struct sock *sk,  const struct rate_sample *rs, 
 
 		cesar->cwnd_est = max(current_cwnd, cesar->cwnd_est);
 	} else if(		
-	(cesar->previous_rtt >= cesar->previous_previous_rtt)
+	(cesar->previous_rtt > cesar->previous_previous_rtt)
 	){
 		u64 over_rtt = 0;
 		u64 beta = CESAR_SMALL_UNIT * cesar_beta;
